@@ -22,6 +22,7 @@ import MentorDashboardPage from '../features/dashboard/mentor/MentorDashboardPag
 import EventsPage from '../features/events/pages/EventsPage';
 import AdminEventsPage from '../features/events/pages/AdminEventsPage';
 import AdminCreateEventPage from '../features/events/pages/AdminCreateEventPage';
+import AdminEditEventPage from '../features/events/pages/AdminEditEventPage';
 
 const AppRoutes = () => {
   return (
@@ -55,6 +56,7 @@ const AppRoutes = () => {
         <Route path="/admin" element={<AdminDashboardPage />} />
         <Route path="/admin/events" element={<AdminEventsPage />} />
         <Route path="/admin/events/create" element={<AdminCreateEventPage />} />
+        <Route path="/admin/events/:id/edit" element={<AdminEditEventPage />} />
       </Route>
 
       {/* Mentor routes */}

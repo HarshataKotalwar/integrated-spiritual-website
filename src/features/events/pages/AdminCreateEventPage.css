@@ -30,3 +30,11 @@
   margin: var(--spacing-sm) 0 var(--spacing-xl);
   color: var(--color-text-muted);
 }
+
+.admin-create-event-status {
+  color: var(--color-text-muted);
+}
+
+.admin-create-event-error {
+  color: var(--color-error);
+}

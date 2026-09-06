@@ -70,3 +70,46 @@
   flex-shrink: 0;
   color: var(--color-primary-dark);
 }
+
+.admin-event-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-lg);
+}
+
+.admin-event-card-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background-color: #fff;
+  color: var(--color-secondary);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.admin-event-card-btn:hover:not(:disabled) {
+  background-color: #f7f1e6;
+}
+
+.admin-event-card-btn-primary {
+  background-color: var(--color-primary);
+  border-color: var(--color-secondary);
+}
+
+.admin-event-card-btn-primary:hover:not(:disabled) {
+  background-color: var(--color-primary-dark);
+}
+
+.admin-event-card-btn-danger {
+  color: var(--color-error);
+  border-color: #e4c4c1;
+}
+
+.admin-event-card-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}

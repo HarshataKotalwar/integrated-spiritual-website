@@ -4,6 +4,7 @@ import type {
   EventFormErrors,
   EventFormStatus,
   EventFormValues,
+  EventStatus,
 } from '../types/event.types';
 
 export const defaultEventFormValues: EventFormValues = {
@@ -98,6 +99,44 @@ export const validateEventForm = (values: EventFormValues): EventFormErrors => {
   }
 
   return errors;
+};
+
+export const eventToUpdateData = (
+  event: Event,
+  status: EventStatus
+): CreateEventData => {
+  const payload: CreateEventData = {
+    title: event.title,
+    event_type: event.event_type,
+    event_date: event.event_date.slice(0, 10),
+    start_time: event.start_time.slice(0, 8),
+    duration_minutes: Number(event.duration_minutes),
+    status,
+  };
+
+  if (event.description) {
+    payload.description = event.description;
+  }
+
+  if (event.banner_url) {
+    payload.banner_url = event.banner_url;
+  }
+
+  if (event.event_type === 'online' && event.meeting_url) {
+    payload.meeting_url = event.meeting_url;
+  }
+
+  if (event.event_type === 'offline' && event.location) {
+    payload.location = event.location;
+  }
+
+  if (event.capacity !== null && event.capacity !== undefined) {
+    payload.capacity = Number(event.capacity);
+  }
+
+  payload.fee = Number(event.fee);
+
+  return payload;
 };
 
 export const eventFormToCreateData = (values: EventFormValues): CreateEventData => {

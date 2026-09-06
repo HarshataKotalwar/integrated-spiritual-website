@@ -24,7 +24,7 @@ export const userNavSections = [
     title: 'CONNECT',
     items: [
       { label: 'Community', icon: Users, path: '/dashboard/community' },
-      { label: 'Events', icon: Calendar, path: '/dashboard/events' },
+      { label: 'Events', icon: Calendar, path: '/events' },
     ],
   },
   {

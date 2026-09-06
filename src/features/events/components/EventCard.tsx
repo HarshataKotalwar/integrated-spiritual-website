@@ -1,5 +1,14 @@
-import { Calendar, Clock, MapPin, Users, Video } from 'lucide-react';
+import {
+  Calendar,
+  Clock,
+  MapPin,
+  Users,
+  Video,
+} from 'lucide-react';
+
 import type { Event } from '../types/event.types';
+
+import './EventCard.css';
 
 interface EventCardProps {
   event: Event;
@@ -8,77 +17,120 @@ interface EventCardProps {
   showActions?: boolean;
 }
 
+const formatEventDate = (dateString: string) => {
+  const datePart = dateString.slice(0, 10);
+  const [year, month, day] = datePart.split('-').map(Number);
+
+  if (!year || !month || !day) {
+    return dateString;
+  }
+
+  const date = new Date(year, month - 1, day);
+
+  return date.toLocaleDateString('en-IN', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+};
+
+const formatEventTime = (timeString: string) => {
+  const [hours, minutes] = timeString
+    .slice(0, 5)
+    .split(':')
+    .map(Number);
+
+  if (Number.isNaN(hours) || Number.isNaN(minutes)) {
+    return timeString;
+  }
+
+  const date = new Date();
+  date.setHours(hours, minutes, 0, 0);
+
+  return date.toLocaleTimeString('en-IN', {
+    hour: 'numeric',
+    minute: '2-digit',
+  });
+};
+
 const EventCard = ({
   event,
   onView,
   showStatus = false,
   showActions = false,
 }: EventCardProps) => {
+  if (!event) {
+    return null;
+  }
+
   const isOnline = event.event_type === 'online';
 
   return (
-    <div className="overflow-hidden rounded-2xl bg-white shadow-sm transition hover:shadow-md">
+    <article className="event-card">
       {event.banner_url ? (
         <img
           src={event.banner_url}
           alt={event.title}
-          className="h-48 w-full object-cover"
+          className="event-card-banner"
         />
       ) : (
-        <div className="flex h-48 items-center justify-center bg-[#E8E8D8]">
-          <Calendar className="h-14 w-14 text-[#8A8F63]" />
+        <div className="event-card-banner event-card-banner-placeholder">
+          <Calendar size={52} />
         </div>
       )}
 
-      <div className="p-6">
-        <div className="mb-3 flex items-center justify-between">
-          <div className="flex items-center gap-2 text-sm font-medium text-[#69734A]">
+      <div className="event-card-content">
+        <div className="event-card-top-row">
+          <div className="event-card-type">
             {isOnline ? (
               <>
-                <Video className="h-4 w-4" />
-                Online
+                <Video size={16} />
+                <span>Online</span>
               </>
             ) : (
               <>
-                <MapPin className="h-4 w-4" />
-                Offline
+                <MapPin size={16} />
+                <span>Offline</span>
               </>
             )}
           </div>
 
           {showStatus && (
-            <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium capitalize text-gray-600">
+            <span className="event-card-status">
               {event.status}
             </span>
           )}
         </div>
 
-        <h2 className="text-xl font-semibold text-[#30352A]">
+        <h2 className="event-card-title">
           {event.title}
         </h2>
 
         {event.description && (
-          <p className="mt-2 line-clamp-2 text-sm text-gray-600">
+          <p className="event-card-description">
             {event.description}
           </p>
         )}
 
-        <div className="mt-5 space-y-2 text-sm text-gray-600">
-          <div className="flex items-center gap-2">
-            <Calendar className="h-4 w-4 text-[#69734A]" />
-            <span>{event.event_date}</span>
+        <div className="event-card-details">
+          <div className="event-card-detail">
+            <Calendar size={17} />
+            <span>
+              {formatEventDate(event.event_date)}
+            </span>
           </div>
 
-          <div className="flex items-center gap-2">
-            <Clock className="h-4 w-4 text-[#69734A]" />
+          <div className="event-card-detail">
+            <Clock size={17} />
             <span>
-              {event.start_time} · {event.duration_minutes} minutes
+              {formatEventTime(event.start_time)} ·{' '}
+              {event.duration_minutes} minutes
             </span>
           </div>
 
           {event.capacity !== null && (
-            <div className="flex items-center gap-2">
-              <Users className="h-4 w-4 text-[#69734A]" />
+            <div className="event-card-detail">
+              <Users size={17} />
               <span>
                 {event.registered_count ?? 0} / {event.capacity} registered
               </span>
@@ -86,43 +138,41 @@ const EventCard = ({
           )}
 
           {event.location && (
-            <div className="flex items-center gap-2">
-              <MapPin className="h-4 w-4 text-[#69734A]" />
+            <div className="event-card-detail">
+              <MapPin size={17} />
               <span>{event.location}</span>
             </div>
           )}
         </div>
 
-        {showActions && (
-          <div className="mt-6 flex gap-3">
+        {showActions ? (
+          <div className="event-card-actions">
             <button
               type="button"
               onClick={() => onView?.(event)}
-              className="flex-1 rounded-xl border border-[#69734A] px-4 py-3 font-medium text-[#69734A] transition hover:bg-[#F4F3EA]"
+              className="event-card-secondary-button"
             >
               View
             </button>
 
             <button
               type="button"
-              className="flex-1 rounded-xl bg-[#69734A] px-4 py-3 font-medium text-white transition hover:bg-[#59613F]"
+              className="event-card-primary-button"
             >
               Manage
             </button>
           </div>
-        )}
-
-        {!showActions && (
+        ) : (
           <button
             type="button"
             onClick={() => onView?.(event)}
-            className="mt-6 w-full rounded-xl bg-[#69734A] px-4 py-3 font-medium text-white transition hover:bg-[#59613F]"
+            className="event-card-primary-button event-card-view-button"
           >
             View Event
           </button>
         )}
       </div>
-    </div>
+    </article>
   );
 };
 

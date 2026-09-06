@@ -5,6 +5,8 @@ import EventCard from '../components/EventCard';
 import { getEvents } from '../services/eventsService';
 import type { Event } from '../types/event.types';
 
+import './EventsPage.css';
+
 const EventsPage = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
@@ -14,23 +16,28 @@ const EventsPage = () => {
     const loadEvents = async () => {
       try {
         const data = await getEvents();
+
+        console.log('Events received from API:', data);
+
         setEvents(data);
       } catch (err) {
-        console.error(err);
+        console.error('Unable to load events:', err);
         setError('Unable to load events.');
       } finally {
         setLoading(false);
       }
     };
 
-    loadEvents();
+    void loadEvents();
   }, []);
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#F7F4ED] px-6 py-10">
-        <div className="mx-auto max-w-6xl">
-          <p className="text-gray-600">Loading events...</p>
+      <div className="events-page">
+        <div className="events-page-container">
+          <div className="events-page-state">
+            <p>Loading events...</p>
+          </div>
         </div>
       </div>
     );
@@ -38,47 +45,49 @@ const EventsPage = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-[#F7F4ED] px-6 py-10">
-        <div className="mx-auto max-w-6xl">
-          <p className="text-red-600">{error}</p>
+      <div className="events-page">
+        <div className="events-page-container">
+          <div className="events-page-state">
+            <p className="events-page-error">{error}</p>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#F7F4ED] px-6 py-10">
-      <div className="mx-auto max-w-6xl">
+    <div className="events-page">
+      <div className="events-page-container">
+        <div className="events-page-header">
+          <p className="events-page-kicker">Spiritual Events</p>
 
-        <div className="mb-10">
-          <p className="mb-2 text-sm font-medium uppercase tracking-wider text-[#8A8F63]">
-            Spiritual Events
-          </p>
-
-          <h1 className="text-4xl font-semibold text-[#30352A]">
+          <h1 className="events-page-title">
             Upcoming Events
           </h1>
 
-          <p className="mt-3 max-w-2xl text-gray-600">
+          <p className="events-page-description">
             Explore upcoming spiritual sessions, retreats, workshops and
             gatherings.
           </p>
         </div>
 
         {events.length === 0 ? (
-          <div className="rounded-2xl bg-white p-12 text-center shadow-sm">
-            <Calendar className="mx-auto mb-4 h-12 w-12 text-[#8A8F63]" />
+          <div className="events-page-empty">
+            <Calendar
+              className="events-page-empty-icon"
+              size={48}
+            />
 
-            <h2 className="text-xl font-semibold text-[#30352A]">
+            <h2 className="events-page-empty-title">
               No upcoming events
             </h2>
 
-            <p className="mt-2 text-gray-500">
+            <p className="events-page-empty-text">
               New events will appear here once they are published.
             </p>
           </div>
         ) : (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="events-page-grid">
             {events.map((event) => (
               <EventCard
                 key={event.id}
@@ -87,7 +96,7 @@ const EventsPage = () => {
             ))}
           </div>
         )}
-
+        
       </div>
     </div>
   );
