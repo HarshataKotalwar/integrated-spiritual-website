@@ -1,4 +1,4 @@
-import { Home, Users, FileText, BookOpen, Calendar, HandHeart, MessagesSquare, Sparkles, BarChart3, Bell, LifeBuoy, Settings } from 'lucide-react';
+import { Home, Users, FileText, BookOpen, Calendar, HandHeart, MessagesSquare, Sparkles, BarChart3, Bell, LifeBuoy, Settings, HeartHandshake } from 'lucide-react';
 
 export const adminNavSections = [
   {
@@ -12,6 +12,7 @@ export const adminNavSections = [
       { label: 'Contents', icon: FileText, path: '/admin/contents' },
       { label: 'Courses', icon: BookOpen, path: '/admin/courses' },
       { label: 'Events', icon: Calendar, path: '/admin/events' },
+      { label: 'Volunteer Management', icon: HeartHandshake, path: '/admin/volunteering' },
       { label: 'Donations', icon: HandHeart, path: '/admin/donations' },
       { label: 'Community', icon: MessagesSquare, path: '/admin/community' },
     ],

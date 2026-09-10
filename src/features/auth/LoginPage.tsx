@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import { loginUser } from './authService';
 import { useAuth } from '@/hooks/useAuth';
@@ -7,6 +7,18 @@ import { useAuth } from '@/hooks/useAuth';
 import './LoginPage.css';
 import AuthVisualPanel from './AuthVisualPanel';
 import { getDashboardPath } from '@/utils/roleRoutes';
+
+const getSafeReturnPath = (from: unknown): string | null => {
+  if (typeof from !== 'string') {
+    return null;
+  }
+
+  if (/^\/events\/\d+$/.test(from) || /^\/volunteering\/\d+$/.test(from)) {
+    return from;
+  }
+
+  return null;
+};
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -17,6 +29,10 @@ const LoginPage = () => {
 
   const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const eventReturnPath = getSafeReturnPath(
+    (location.state as { from?: unknown } | null)?.from
+  );
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,7 +48,7 @@ const LoginPage = () => {
     try {
       const data = await loginUser({ email, password });
       login(data.user, data.token);
-      navigate(getDashboardPath(data.user.role));
+      navigate(eventReturnPath ?? getDashboardPath(data.user.role));
     } catch (err: any) {
       if (err.response?.data?.unverified) {
         navigate('/verify-email', { state: { email } });

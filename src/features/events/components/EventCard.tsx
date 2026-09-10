@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import {
   Calendar,
   Clock,
@@ -7,6 +8,8 @@ import {
 } from 'lucide-react';
 
 import type { Event } from '../types/event.types';
+import { EventLifecycleBadge } from './EventStatusBadge';
+import { getEventLifecycleStatus } from '../utils/eventLifecycle';
 
 import './EventCard.css';
 
@@ -15,6 +18,7 @@ interface EventCardProps {
   onView?: (event: Event) => void;
   showStatus?: boolean;
   showActions?: boolean;
+  showParticipation?: boolean;
 }
 
 const formatEventDate = (dateString: string) => {
@@ -58,12 +62,14 @@ const EventCard = ({
   onView,
   showStatus = false,
   showActions = false,
+  showParticipation = false,
 }: EventCardProps) => {
   if (!event) {
     return null;
   }
 
   const isOnline = event.event_type === 'online';
+  const lifecycle = getEventLifecycleStatus(event);
 
   return (
     <article className="event-card">
@@ -95,11 +101,9 @@ const EventCard = ({
             )}
           </div>
 
-          {showStatus && (
-            <span className="event-card-status">
-              {event.status}
-            </span>
-          )}
+          {showStatus ? (
+            <EventLifecycleBadge status={lifecycle} />
+          ) : null}
         </div>
 
         <h2 className="event-card-title">
@@ -145,6 +149,27 @@ const EventCard = ({
           )}
         </div>
 
+        {showParticipation ? (
+          <div className="event-card-participation">
+            <p>
+              Attendance:{' '}
+              {event.attendance_status === 'present'
+                ? 'Present'
+                : event.attendance_status === 'absent'
+                  ? 'Absent'
+                  : 'Not recorded yet'}
+            </p>
+            <p>
+              Certificate:{' '}
+              {event.certificate_status === 'available'
+                ? 'Available'
+                : event.certificate_status === 'pending'
+                  ? 'Pending'
+                  : 'Not available'}
+            </p>
+          </div>
+        ) : null}
+
         {showActions ? (
           <div className="event-card-actions">
             <button
@@ -163,13 +188,12 @@ const EventCard = ({
             </button>
           </div>
         ) : (
-          <button
-            type="button"
-            onClick={() => onView?.(event)}
+          <Link
+            to={`/events/${event.id}`}
             className="event-card-primary-button event-card-view-button"
           >
             View Event
-          </button>
+          </Link>
         )}
       </div>
     </article>

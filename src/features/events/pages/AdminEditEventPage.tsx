@@ -7,6 +7,7 @@ import EventForm from '../components/EventForm';
 import { getEventById, updateEvent } from '../services/eventsService';
 import type { CreateEventData, Event } from '../types/event.types';
 import { getApiErrorMessage } from '../utils/getApiErrorMessage';
+import { canEditEventCoreDetails } from '../utils/eventLifecycle';
 import './AdminCreateEventPage.css';
 
 const AdminEditEventPage = () => {
@@ -82,13 +83,13 @@ const AdminEditEventPage = () => {
         <p className="admin-create-event-error">{loadError}</p>
       ) : null}
 
-      {!loading && event && event.status === 'cancelled' ? (
+      {!loading && event && !canEditEventCoreDetails(event) ? (
         <p className="admin-create-event-error">
-          Cancelled events cannot be edited. Restore is not available; create a new event if needed.
+          Core event details cannot be edited after the event has started.
         </p>
       ) : null}
 
-      {!loading && event && event.status !== 'cancelled' ? (
+      {!loading && event && canEditEventCoreDetails(event) ? (
         <EventForm
           event={event}
           submitLabel="Save changes"

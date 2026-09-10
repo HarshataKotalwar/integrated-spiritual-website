@@ -163,6 +163,9 @@
 }
 
 .dash-event-register-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: none;
   border: 1px solid var(--color-primary);
   color: var(--color-primary);
@@ -170,11 +173,18 @@
   padding: 6px var(--spacing-sm);
   font-size: 0.85rem;
   font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
 .dash-event-register-btn:hover {
   background-color: var(--color-primary);
   color: #fff;
+}
+
+.dash-event-error {
+  color: var(--color-error);
+  font-size: 0.9rem;
 }
 .dash-quote-card {
   background-color: #fffdf8;

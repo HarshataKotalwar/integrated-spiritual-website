@@ -107,11 +107,15 @@
   
   .event-card-primary-button,
   .event-card-secondary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     min-height: 44px;
     border-radius: 10px;
     padding: 10px 16px;
     font-size: 0.9rem;
     font-weight: 600;
+    text-decoration: none;
     transition: background-color 0.2s ease;
   }
   
@@ -143,6 +147,16 @@
   .event-card-view-button {
     width: 100%;
     margin-top: var(--spacing-lg);
+  }
+
+  .event-card-participation {
+    margin-top: var(--spacing-md);
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  .event-card-participation p {
+    margin-bottom: 4px;
   }
   
   @media (max-width: 620px) {

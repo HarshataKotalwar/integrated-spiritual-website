@@ -23,3 +23,18 @@
   background-color: #f4e0de;
   color: #9a3d38;
 }
+
+.event-status-badge-upcoming {
+  background-color: #e8efe4;
+  color: #3d6b45;
+}
+
+.event-status-badge-live {
+  background-color: #f4ead0;
+  color: #8a5a12;
+}
+
+.event-status-badge-completed {
+  background-color: #e7ece8;
+  color: #4a5648;
+}

@@ -8,6 +8,7 @@ import {
   formatEventFee,
   formatEventTime,
 } from '../utils/eventForm';
+import { canEditEventCoreDetails } from '../utils/eventLifecycle';
 import './AdminEventCard.css';
 
 export type AdminEventAction = 'publish' | 'unpublish' | 'cancel' | 'delete';
@@ -32,6 +33,7 @@ const AdminEventCard = ({
   const isOnline = event.event_type === 'online';
   const registeredCount = event.registered_count ?? 0;
   const isBusy = busyAction !== null;
+  const canEdit = canEditEventCoreDetails(event);
 
   return (
     <article
@@ -93,7 +95,14 @@ const AdminEventCard = ({
         </div>
 
         <div className="admin-event-card-actions">
-          {event.status !== 'cancelled' ? (
+          <Link
+            to={`/admin/events/${event.id}`}
+            className="admin-event-card-btn admin-event-card-btn-primary"
+          >
+            Manage
+          </Link>
+
+          {canEdit ? (
             <Link
               to={`/admin/events/${event.id}/edit`}
               className="admin-event-card-btn"

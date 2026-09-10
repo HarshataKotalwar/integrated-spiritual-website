@@ -148,11 +148,8 @@ export const eventFormToCreateData = (values: EventFormValues): CreateEventData 
     start_time: values.start_time,
     duration_minutes: Number(values.duration_minutes),
     status: values.status,
+    banner_url: values.banner_url.trim() || undefined,
   };
-
-  if (values.banner_url.trim()) {
-    payload.banner_url = values.banner_url.trim();
-  }
 
   if (values.event_type === 'online') {
     payload.meeting_url = values.meeting_url.trim();

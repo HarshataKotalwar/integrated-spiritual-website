@@ -4,6 +4,7 @@ import DashStatCard from './DashStatCard';
 import { userNavSections } from './userNavConfig';
 import { useAuth } from '@/hooks/useAuth';
 import { Flower2, Sparkles, Flower } from 'lucide-react';
+import UpcomingEventsWidget from './widgets/UpcomingEventsWidget';
 import './DashboardPage.css';
 
 const DashboardPage = () => {
@@ -78,36 +79,7 @@ const DashboardPage = () => {
             <button className="dash-widget-btn">Ask AI Guide →</button>
           </div>
 
-          <div className="dash-widget-card">
-            <div className="dash-widget-header-row">
-              <h3 className="dash-widget-title">Upcoming Events</h3>
-              <a href="#" className="dash-widget-link">View Calendar →</a>
-            </div>
-
-            <div className="dash-event-row">
-              <div className="dash-event-date">
-                <span>MAY</span>
-                <strong>24</strong>
-              </div>
-              <div className="dash-event-info">
-                <p className="dash-event-title">Meditation Retreat</p>
-                <p className="dash-event-meta">5:00 PM · Online</p>
-              </div>
-              <button className="dash-event-register-btn">Register</button>
-            </div>
-
-            <div className="dash-event-row">
-              <div className="dash-event-date">
-                <span>MAY</span>
-                <strong>31</strong>
-              </div>
-              <div className="dash-event-info">
-                <p className="dash-event-title">Inner Peace Workshop</p>
-                <p className="dash-event-meta">11:00 AM · Online</p>
-              </div>
-              <button className="dash-event-register-btn">Register</button>
-            </div>
-          </div>
+          <UpcomingEventsWidget />
         </div>
 
         <div className="dash-quote-card">

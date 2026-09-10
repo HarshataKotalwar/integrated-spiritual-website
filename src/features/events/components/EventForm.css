@@ -141,6 +141,20 @@
   cursor: not-allowed;
 }
 
+.event-form-banner-preview {
+  margin-bottom: var(--spacing-sm);
+}
+
+.event-form-banner-preview img {
+  display: block;
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: var(--spacing-sm);
+  border: 1px solid var(--color-border);
+}
+
 @media (max-width: 720px) {
   .event-form {
     padding: var(--spacing-lg);

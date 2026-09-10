@@ -1,6 +1,7 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react';
 
 import EventFormField from './EventFormField';
+import { uploadEventBanner } from '../services/eventsService';
 import type {
   CreateEventData,
   Event,
@@ -15,6 +16,7 @@ import {
   eventToFormValues,
   validateEventForm,
 } from '../utils/eventForm';
+import { getApiErrorMessage } from '../utils/getApiErrorMessage';
 import './EventForm.css';
 
 interface EventFormProps {
@@ -42,6 +44,8 @@ const EventForm = ({
     ...initialValues,
   });
   const [errors, setErrors] = useState<EventFormErrors>({});
+  const [bannerUploading, setBannerUploading] = useState(false);
+  const [bannerError, setBannerError] = useState('');
 
   const updateField = <K extends keyof EventFormValues>(
     field: K,
@@ -56,6 +60,27 @@ const EventForm = ({
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       updateField(field, e.target.value);
     };
+
+  const handleBannerChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = '';
+
+    if (!file || isSubmitting) {
+      return;
+    }
+
+    setBannerUploading(true);
+    setBannerError('');
+
+    try {
+      const url = await uploadEventBanner(file);
+      updateField('banner_url', url);
+    } catch (err) {
+      setBannerError(getApiErrorMessage(err, 'Unable to upload this image.'));
+    } finally {
+      setBannerUploading(false);
+    }
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -248,20 +273,36 @@ const EventForm = ({
       )}
 
       <EventFormField
-        id="banner_url"
-        label="Banner URL"
+        id="banner"
+        label="Event banner"
         error={errors.banner_url}
-        hint="Optional image URL for the event banner."
+        hint="Optional PNG, JPG, JPEG, or WebP image."
       >
+        {values.banner_url ? (
+          <div className="event-form-banner-preview">
+            <img src={values.banner_url} alt="" />
+            <button
+              type="button"
+              className="event-form-cancel"
+              onClick={() => updateField('banner_url', '')}
+              disabled={isSubmitting || bannerUploading}
+            >
+              Remove image
+            </button>
+          </div>
+        ) : null}
         <input
-          id="banner_url"
-          type="url"
-          placeholder="https://"
+          id="banner"
+          type="file"
+          accept="image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp"
           className="event-form-input"
-          value={values.banner_url}
-          onChange={handleInputChange('banner_url')}
-          disabled={isSubmitting}
+          onChange={(e) => {
+            void handleBannerChange(e);
+          }}
+          disabled={isSubmitting || bannerUploading}
         />
+        {bannerUploading ? <p className="event-form-hint">Uploading image...</p> : null}
+        {bannerError ? <p className="event-form-server-error">{bannerError}</p> : null}
       </EventFormField>
 
       <div className="event-form-grid">

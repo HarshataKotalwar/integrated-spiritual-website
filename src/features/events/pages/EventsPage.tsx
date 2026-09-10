@@ -16,12 +16,8 @@ const EventsPage = () => {
     const loadEvents = async () => {
       try {
         const data = await getEvents();
-
-        console.log('Events received from API:', data);
-
         setEvents(data);
-      } catch (err) {
-        console.error('Unable to load events:', err);
+      } catch {
         setError('Unable to load events.');
       } finally {
         setLoading(false);
