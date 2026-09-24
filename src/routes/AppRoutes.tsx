@@ -36,6 +36,17 @@ import MyVolunteeringPage from '../features/volunteering/pages/MyVolunteeringPag
 import AdminVolunteeringPage from '../features/volunteering/pages/AdminVolunteeringPage';
 import AdminCreateVolunteerPage from '../features/volunteering/pages/AdminCreateVolunteerPage';
 import AdminVolunteerManagePage from '../features/volunteering/pages/AdminVolunteerManagePage';
+import NotificationsPage from '../features/notifications/pages/NotificationsPage';
+import NotificationSettingsPage from '../features/notifications/pages/NotificationSettingsPage';
+import AdminNotificationsPage from '../features/notifications/pages/AdminNotificationsPage';
+import HelpPage from '../features/help/pages/HelpPage';
+import MySupportPage from '../features/help/pages/MySupportPage';
+import CreateSupportPage from '../features/help/pages/CreateSupportPage';
+import SupportTicketPage from '../features/help/pages/SupportTicketPage';
+import AdminHelpDeskPage from '../features/help/pages/AdminHelpDeskPage';
+import AdminTicketPage from '../features/help/pages/AdminTicketPage';
+import AdminFaqsPage from '../features/help/pages/AdminFaqsPage';
+import AdminFaqFormPage from '../features/help/pages/AdminFaqFormPage';
 
 const AppRoutes = () => {
   return (
@@ -49,6 +60,7 @@ const AppRoutes = () => {
         <Route path="/events/:id" element={<EventDetailsPage />} />
         <Route path="/volunteering" element={<VolunteeringPage />} />
         <Route path="/volunteering/:id" element={<VolunteerOpportunityPage />} />
+        <Route path="/help" element={<HelpPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
 
@@ -77,6 +89,11 @@ const AppRoutes = () => {
         <Route path="/community" element={<CommunityPage />} />
         <Route path="/community/groups/:id" element={<CommunityGroupPage />} />
         <Route path="/community/questions/:id" element={<CommunityQuestionPage />} />
+        <Route path="/notifications" element={<NotificationsPage />} />
+        <Route path="/settings/notifications" element={<NotificationSettingsPage />} />
+        <Route path="/my-support" element={<MySupportPage />} />
+        <Route path="/my-support/new" element={<CreateSupportPage />} />
+        <Route path="/my-support/:id" element={<SupportTicketPage />} />
       </Route>
 
       {/* Admin routes */}
@@ -90,6 +107,12 @@ const AppRoutes = () => {
         <Route path="/admin/volunteering" element={<AdminVolunteeringPage />} />
         <Route path="/admin/volunteering/create" element={<AdminCreateVolunteerPage />} />
         <Route path="/admin/volunteering/:id" element={<AdminVolunteerManagePage />} />
+        <Route path="/admin/notifications" element={<AdminNotificationsPage />} />
+        <Route path="/admin/helpdesk" element={<AdminHelpDeskPage />} />
+        <Route path="/admin/helpdesk/tickets/:id" element={<AdminTicketPage />} />
+        <Route path="/admin/helpdesk/faqs" element={<AdminFaqsPage />} />
+        <Route path="/admin/helpdesk/faqs/create" element={<AdminFaqFormPage />} />
+        <Route path="/admin/helpdesk/faqs/:id/edit" element={<AdminFaqFormPage />} />
       </Route>
 
       {/* Mentor routes */}

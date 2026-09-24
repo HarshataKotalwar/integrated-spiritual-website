@@ -1,5 +1,6 @@
-import { Search, Bell, ChevronDown } from 'lucide-react';
+import { Search, ChevronDown } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+import NotificationBell from '@/features/notifications/components/NotificationBell';
 import './DashboardHeader.css';
 
 interface DashboardHeaderProps {
@@ -22,9 +23,7 @@ const DashboardHeader = ({ title, subtitle }: DashboardHeaderProps) => {
           <Search size={18} />
           <input type="text" placeholder="Search..." />
         </div>
-        <button className="dash-header-icon-btn" aria-label="Notifications">
-          <Bell size={20} />
-        </button>
+        <NotificationBell />
         <div className="dash-header-profile">
           <div className="dash-header-avatar">{user?.name?.[0]?.toUpperCase()}</div>
           <span>{user?.name}</span>

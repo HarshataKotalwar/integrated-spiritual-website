@@ -1,4 +1,4 @@
-import { Home, UserPen, Flower2, LayoutGrid, Smile, BookOpen, Users, Calendar, CalendarCheck, HandHeart, HeartHandshake, Sparkles, UserCog, Settings } from 'lucide-react';
+import { Home, UserPen, Flower2, LayoutGrid, Smile, BookOpen, Users, Calendar, CalendarCheck, HandHeart, HeartHandshake, Sparkles, UserCog, Settings, Bell, LifeBuoy } from 'lucide-react';
 
 export const userNavSections = [
   {
@@ -44,6 +44,9 @@ export const userNavSections = [
     title: 'ACCOUNT',
     items: [
       { label: 'Profile', icon: UserCog, path: '/dashboard/profile' },
+      { label: 'Notifications', icon: Bell, path: '/settings/notifications' },
+      { label: 'Help', icon: LifeBuoy, path: '/help' },
+      { label: 'My Support', icon: LifeBuoy, path: '/my-support' },
       { label: 'Settings', icon: Settings, path: '/dashboard/settings' },
     ],
   },

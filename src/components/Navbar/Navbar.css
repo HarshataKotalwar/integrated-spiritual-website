@@ -25,9 +25,13 @@
 
   .navbar-greeting {
     margin-left: auto;
-    margin-right: var(--spacing-md);
+    margin-right: var(--spacing-sm);
     color: var(--color-text-muted);
     font-size: 0.9rem;
+  }
+
+  .navbar .notification-bell {
+    margin-right: var(--spacing-md);
   }
   
   .navbar-logout-btn {

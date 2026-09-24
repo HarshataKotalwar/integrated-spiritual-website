@@ -1,4 +1,4 @@
-import { Home, Calendar, CalendarCheck, Users, MessageSquare, BookOpen, StickyNote, BarChart3, MessagesSquare, Settings, HeartHandshake } from 'lucide-react';
+import { Home, Calendar, CalendarCheck, Users, MessageSquare, BookOpen, StickyNote, BarChart3, MessagesSquare, Settings, HeartHandshake, Bell, LifeBuoy } from 'lucide-react';
 
 export const mentorNavSections = [
   {
@@ -30,6 +30,11 @@ export const mentorNavSections = [
   },
   {
     title: 'ACCOUNT',
-    items: [{ label: 'Settings', icon: Settings, path: '/mentor/settings' }],
+    items: [
+      { label: 'Help', icon: LifeBuoy, path: '/help' },
+      { label: 'My Support', icon: LifeBuoy, path: '/my-support' },
+      { label: 'Notifications', icon: Bell, path: '/settings/notifications' },
+      { label: 'Settings', icon: Settings, path: '/mentor/settings' },
+    ],
   },
 ];

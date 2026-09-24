@@ -28,7 +28,7 @@ export const adminNavSections = [
     title: 'COMMUNICATION',
     items: [
       { label: 'Notifications', icon: Bell, path: '/admin/notifications' },
-      { label: 'Support', icon: LifeBuoy, path: '/admin/support' },
+      { label: 'Help Desk', icon: LifeBuoy, path: '/admin/helpdesk' },
     ],
   },
   {
